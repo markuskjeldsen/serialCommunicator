@@ -21,8 +21,11 @@ The application is designed for simple LoRa module communication and automatical
 3. Build the application:
 
 ```bash
-chmod +x build.sh run.sh
-./build.sh
+# Host build
+go build -o serialcom .
+
+# ARM64 build (Android/Linux)
+GOOS=linux GOARCH=arm64 go build -o serialcom-arm64 .
 ```
 
 ## Usage

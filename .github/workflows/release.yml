@@ -59,13 +59,16 @@ jobs:
         with:
           go-version: "1.22"
 
-      - name: Build
-        run: |
-          chmod +x build.sh
-          ./build.sh
+      - name: Build x86
+        run: go build -o serialcom-x86 .
 
-      - name: Rename binary
-        run: mv serialcom serialcom-${{ needs.tag.outputs.new_tag }}
+      - name: Build ARM64
+        run: GOOS=linux GOARCH=arm64 go build -o serialcom-arm64 .
+
+      - name: Rename binaries
+        run: |
+          mv serialcom-x86 serialcom-x86-${{ needs.tag.outputs.new_tag }}
+          mv serialcom-arm64 serialcom-arm64-${{ needs.tag.outputs.new_tag }}
 
       - uses: actions/upload-artifact@v4
         with:
